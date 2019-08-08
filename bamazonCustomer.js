@@ -17,13 +17,38 @@ var connection = mysql.createConnection({
 startApp();
 
 function startApp() {
-    connection.query('SELECT * FROM products', function(data) {
-      console.log(data);
-      inquirer.prompt([
+    connection.query('SELECT * FROM products', function (err, data) {
+        //console.log(data);
+        console.table(data);
+        inquirer.prompt([
 
-      ]).then(function(answers)  {
-          nextStep(answers,data);
-      })
+
+            {
+                type: 'input',
+                name: 'productID',
+                message: 'What is the product ID?',
+            },
+
+            {
+                type: 'input',
+                name: 'numberOfUnits',
+                message: 'How many units are you purchasing?',
+            }
+
+
+        ]).then(function (answers) {
+            console.log(answers);
+            // nextStep(answers,data);
+            //SQL statement to update the database, subtract quantity and give customer total
+            //total = unit price * quanity
+
+            var sql = "UPDATE products SET stock_quantity = '40' WHERE stock_quantity = '42'";
+            connection.query(sql, function (err, result) {
+                if (err) throw err;
+                console.log(result.affectedRows + " record updated");
+                console.table(data);
+            })
+        })
     })
 }
 
@@ -33,24 +58,7 @@ function nextStep(values, database) {
     nextNextStep(database);
 }
 
-function nextNextStep(info){
+function nextNextStep(info) {
     console.log(info);
 }
-inquirer.prompt([
 
-    {
-        type: 'input',
-        name: 'productID',
-        message: 'What is the product ID?',
-    },
-
-    {
-        type: 'input',
-        name: 'numberOfUnits',
-        message: 'How many units are you purchasing?',
-    }
-
-]).then(function (answers) {
-console.log(answers);
-console.log()
-})
