@@ -42,7 +42,8 @@ function startApp() {
             //SQL statement to update the database, subtract quantity and give customer total
             //total = unit price * quanity
 
-            var sql = "UPDATE products SET stock_quantity = '40' WHERE stock_quantity = '42'";
+            var sql = "UPDATE products SET stock_quantity" - data.name[1];  "WHERE id " = data.name[0];
+            
             connection.query(sql, function (err, result) {
                 if (err) throw err;
                 console.log(result.affectedRows + " record updated");
