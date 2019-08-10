@@ -19,6 +19,7 @@ startApp();
 function startApp() {
     connection.query('SELECT * FROM products', function (err, data) {
         //console.log(data);
+        // console.log(data[0].id);
         console.table(data);
         inquirer.prompt([
 
@@ -38,17 +39,25 @@ function startApp() {
 
         ]).then(function (answers) {
             console.log(answers);
+            var quan = data[parseInt(answers.productID) - 1].stock_quantity;
+            console.log(quan);
             // nextStep(answers,data);
             //SQL statement to update the database, subtract quantity and give customer total
             //total = unit price * quanity
 
-            var sql = "UPDATE products SET stock_quantity" - data.name[1];  "WHERE id " = data.name[0];
-            
+            var sql = "UPDATE products SET products.stock_quantity = " + (parseInt(quan) - parseInt(answers.numberOfUnits)) + " WHERE id = " + answers.productID;
+
+            console.log(sql);
+
             connection.query(sql, function (err, result) {
                 if (err) throw err;
                 console.log(result.affectedRows + " record updated");
-                console.table(data);
+                console.table(result);
+                //connection.query('SELECT * FROM products', function (err, data) {
+
+
             })
+            console.log("You Purchased")
         })
     })
 }
