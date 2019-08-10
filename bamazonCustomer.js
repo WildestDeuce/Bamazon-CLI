@@ -50,25 +50,15 @@ function startApp() {
             console.log(sql);
 
             connection.query(sql, function (err, result) {
-                if (err) throw err;
-                console.log(result.affectedRows + " record updated");
-                console.table(result);
-                //connection.query('SELECT * FROM products', function (err, data) {
+
+                connection.query('SELECT * FROM products', function (err, info) {
+                    if (err) throw err;
+                    console.table(info);
 
 
+                })
+                console.log("You Purchased")
             })
-            console.log("You Purchased")
         })
     })
 }
-
-function nextStep(values, database) {
-    console.log(values);
-
-    nextNextStep(database);
-}
-
-function nextNextStep(info) {
-    console.log(info);
-}
-
